@@ -1,44 +1,45 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-// HOOKS
+import { useContext } from 'react';
+
+// CONTEXT
+import { ContextProvider, ContextData } from 'components/hooks/useExcel';
+
+// COMPONENTS
+import { Buttons } from 'components/sections';
+import { Input } from 'components/items';
+
+// STYLES
+import { StyledGrid, StyledExcel, StyledResultsGrid, StyledGridWrapper } from 'components/Styles';
+
+// HELPERS
 import { tokenMaker } from 'components/helpers/tokenMaker';
-import { useExcel } from 'components/hooks/useExcel';
+import { GridObjectInterface } from 'components/models/hooks';
 
-import { StyledGrid } from 'components/Styles';
+export const ExcelWrapper = () => {
+	const { row, col, gridArray, rowsResults } = useContext(ContextData);
 
-export const Excel = () => {
-	const { row, setRow, col, setCol, rows, cols } = useExcel();
-	const tmp = Array(col * row);
 	return (
-		<div>
-			<div>
-				<button type="button" onClick={() => setCol(col + 1)}>
-					+
-				</button>
-				<span>Columns: {col}</span>
-				<button type="button" onClick={() => setCol(col - 1)}>
-					-
-				</button>
-			</div>
-			<br />
-			<div>
-				<button type="button" onClick={() => setRow(row + 1)}>
-					+
-				</button>
-				<span>Rows: {row}</span>
-				<button type="button" onClick={() => setRow(row - 1)}>
-					-
-				</button>
-			</div>
-			<br />
-			<br />
-			<br />
-			<StyledGrid col={col} row={row}>
-				{[...Array(col * row)].map((index) => (
-					<span className="busterCards" key={tokenMaker(9)}>
-						1
-					</span>
-				))}
-			</StyledGrid>
-		</div>
+		<StyledExcel>
+			<Buttons />
+			<StyledGridWrapper>
+				<StyledGrid col={col} row={row}>
+					{gridArray?.map((item: GridObjectInterface) => (
+						<Input key={tokenMaker(9)} value={item.value} />
+					))}
+				</StyledGrid>
+
+				<StyledResultsGrid row={row}>
+					{rowsResults?.map((item: any) => {
+						const sum = item?.reduce((accumulator: any, object: { value: any }) => accumulator + object.value, 0);
+						return <div key={tokenMaker(9)}>{sum}</div>;
+					})}
+				</StyledResultsGrid>
+			</StyledGridWrapper>
+		</StyledExcel>
 	);
 };
+
+export const Excel = () => (
+	<ContextProvider>
+		<ExcelWrapper />
+	</ContextProvider>
+);

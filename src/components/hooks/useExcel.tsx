@@ -1,34 +1,49 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, createContext } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+
+// MODELS
+import { ContextProviderProps, GridObjectInterface } from 'components/models/hooks';
+
+// HELPERS
+import { spliceIntoChunks } from 'components/helpers/spliceIntoChunks';
+import { getRandomNumber } from 'components/helpers/randomNumber';
 
 export const useExcel = () => {
 	const [row, setRow] = useState(3);
 	const [col, setCol] = useState(3);
-	const [rows, setRows] = useState<number[]>([]);
-	const [cols, setCols] = useState<number[]>([]);
+	const [gridArray, setGridArray] = useState<GridObjectInterface[]>([]);
+	const [rowsResults, setRowsResults] = useState<any>([]);
 
-	const generateGrid = () => {
-		rows.length = 0;
-		cols.length = 0;
-		for (let i = 0; i < row; i++) {
-			rows.push(i);
-		}
-		for (let j = 0; j < col; j++) {
-			cols.push(j);
-		}
-		setRows(() => [...rows]);
-		setCols(() => [...cols]);
+	const generateNewObject = () => {
+		const newValue: GridObjectInterface = {
+			position: uuidv4(),
+			value: getRandomNumber(),
+		};
+		return newValue;
 	};
 
 	useEffect(() => {
-		generateGrid();
+		setGridArray(Array.from({ length: col * row }, () => generateNewObject()));
 	}, [row, col]);
+
+	useEffect(() => {
+		setRowsResults(spliceIntoChunks(gridArray, col));
+	}, [gridArray]);
+
+	console.log(gridArray);
 
 	return {
 		row,
-		rows,
 		col,
-		cols,
+		gridArray,
+		rowsResults,
 		setRow,
 		setCol,
 	};
 };
+
+export const ContextData = createContext({} as ReturnType<typeof useExcel>);
+
+export const ContextProvider = ({ children }: ContextProviderProps) => (
+	<ContextData.Provider value={useExcel()}>{children}</ContextData.Provider>
+);

@@ -7,7 +7,8 @@ export const StyledAppWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: center;
+	justify-content: flex-start;
+	padding-top: 10rem;
 	background-color: #282c34;
 	font-size: 1rem;
 	line-height: 1.25rem;

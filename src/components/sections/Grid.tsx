@@ -7,7 +7,7 @@ import { ContextData } from 'components/hooks/useExcel';
 import { Input } from 'components/items';
 
 // STYLES
-import { StyledGrid, StyledResultsGrid, StyledGridWrapper } from 'components/sections/Styles';
+import { StyledGrid, StyledResultsGrid, StyledGridWrapper, StyledSum } from 'components/sections/Styles';
 
 // HELPERS
 import { tokenMaker } from 'components/helpers/tokenMaker';
@@ -29,10 +29,9 @@ export const Grid = () => {
 				</StyledGrid>
 
 				<StyledResultsGrid row={row}>
-					<span>Sum</span>
 					{rowsResults?.map((item: GridObjectInterface[]) => {
 						const sum = arrayObjectSum(item);
-						return <div key={tokenMaker(9)}>{sum}</div>;
+						return <StyledSum key={tokenMaker(9)}>{sum}</StyledSum>;
 					})}
 				</StyledResultsGrid>
 			</StyledGridWrapper>

@@ -6,6 +6,9 @@ import { ContextData } from 'components/hooks/useExcel';
 // MODELS
 import { GridObjectInterface } from 'components/models/hooks';
 
+// STYLES
+import { StyledInput } from 'components/items/Styles';
+
 export const Input = (item: GridObjectInterface) => {
 	const { updateInputs } = useContext(ContextData);
 	const { value } = item;
@@ -25,5 +28,5 @@ export const Input = (item: GridObjectInterface) => {
 		}
 	};
 
-	return <input type="number" max={limit} value={inputValue} onChange={(e) => onClickHandler(e)} />;
+	return <StyledInput type="number" max={limit} value={inputValue} onChange={(e) => onClickHandler(e)} />;
 };

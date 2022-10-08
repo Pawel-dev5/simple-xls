@@ -19,13 +19,13 @@ const BaseGrid = css`
 	grid-template-columns: repeat(3, 1fr);
 	grid-template-rows: repeat(3, 1fr);
 	grid-gap: 1rem;
+	padding: 0.5rem;
 `;
 
 export const StyledGrid = styled.div<{ col: number; row: number }>`
 	${BaseGrid}
 	width: 100%;
 	max-width: 100%;
-	padding-left: 1rem;
 	overflow-x: auto;
 
 	${({ col }) =>
@@ -44,23 +44,30 @@ export const StyledGrid = styled.div<{ col: number; row: number }>`
 export const StyledResultsGrid = styled.div<{ row: number }>`
 	${BaseGrid}
 	grid-template-columns: repeat(1, 1fr);
-	padding-right: 1rem;
+	min-height: 100%;
 
 	${({ row }) =>
 		row &&
 		css`
-			grid-template-rows: repeat(${row + 1}, 1fr);
+			grid-template-rows: repeat(${row}, 1fr);
 		`};
 `;
 
 export const StyledGridWrapper = styled.div`
-	width: 100%;
+	width: fit-content;
 	height: 100%;
 	display: flex;
 	align-items: end;
 	justify-content: center;
 	gap: 2rem;
 	flex-flow: row nowrap;
+`;
+
+export const StyledSum = styled.span`
+	height: 2.13rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 `;
 
 //  GRID END

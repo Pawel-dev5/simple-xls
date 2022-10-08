@@ -7,5 +7,5 @@ export const StyledExcel = styled.div`
 	align-items: center;
 	justify-content: center;
 	flex-flow: column nowrap;
-	gap: 2rem;
+	gap: 1rem;
 `;

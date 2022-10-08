@@ -61,7 +61,6 @@ export const StyledGridWrapper = styled.div`
 	display: flex;
 	align-items: end;
 	justify-content: center;
-	gap: 2rem;
 	flex-flow: row nowrap;
 `;
 
@@ -77,6 +76,10 @@ export const StyledCountersWrapper = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+`;
+
+export const StyledButtons = styled.div`
+	margin-top: 2rem;
 `;
 
 //  GRID END

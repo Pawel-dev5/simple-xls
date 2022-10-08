@@ -7,13 +7,13 @@ import { ContextData } from 'components/hooks/useExcel';
 import { Button } from 'components/items';
 
 // STYLES
-import { StyledButtonWrapper, StyledCounter, StyledCountersWrapper } from 'components/sections/Styles';
+import { StyledButtonWrapper, StyledCounter, StyledCountersWrapper, StyledButtons } from 'components/sections/Styles';
 
 export const Buttons = () => {
 	const { row, setRow, col, setCol } = useContext(ContextData);
 
 	return (
-		<div>
+		<StyledButtons>
 			<StyledButtonWrapper>
 				<span>Columns: </span>
 				<StyledCountersWrapper>
@@ -31,6 +31,6 @@ export const Buttons = () => {
 					<Button onClick={() => setRow(row + 1)} icon="+" />
 				</StyledCountersWrapper>
 			</StyledButtonWrapper>
-		</div>
+		</StyledButtons>
 	);
 };

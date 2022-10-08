@@ -5,6 +5,6 @@ export interface ContextProviderProps {
 }
 
 export interface GridObjectInterface {
-	position: string;
+	uuid: string;
 	value: number;
 }

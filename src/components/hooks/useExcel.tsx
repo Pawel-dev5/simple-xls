@@ -7,7 +7,7 @@ import { ContextProviderProps, GridObjectInterface } from 'components/models/hoo
 // HELPERS
 import { spliceIntoChunks } from 'components/helpers/spliceIntoChunks';
 import { getRandomNumber } from 'components/helpers/randomNumber';
-import { arrayObjectSum } from 'components/helpers/arrayObjectSum';
+import { arrayObjectSum, updateArray } from 'components/helpers/arrayHelpers';
 
 export const useExcel = () => {
 	const [allItemsCounter, setAllItemsCounter] = useState(0);
@@ -18,10 +18,15 @@ export const useExcel = () => {
 
 	const generateNewObject = () => {
 		const newValue: GridObjectInterface = {
-			position: uuidv4(),
+			uuid: uuidv4(),
 			value: getRandomNumber(),
 		};
 		return newValue;
+	};
+
+	const updateInputs = (item: GridObjectInterface) => {
+		const newValues = updateArray(gridArray, item);
+		setGridArray(newValues);
 	};
 
 	useEffect(() => setGridArray(Array.from({ length: col * row }, () => generateNewObject())), [row, col]);
@@ -36,9 +41,10 @@ export const useExcel = () => {
 		col,
 		gridArray,
 		rowsResults,
+		allItemsCounter,
 		setRow,
 		setCol,
-		allItemsCounter,
+		updateInputs,
 	};
 };
 

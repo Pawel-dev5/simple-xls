@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const StyledButtonWrapper = styled.div`
 	width: 15rem;
@@ -11,3 +11,56 @@ export const StyledButtonWrapper = styled.div`
 export const StyledCounter = styled.span`
 	padding: 0 1rem;
 `;
+
+// GRID START
+
+const BaseGrid = css`
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: repeat(3, 1fr);
+	grid-gap: 1rem;
+`;
+
+export const StyledGrid = styled.div<{ col: number; row: number }>`
+	${BaseGrid}
+	width: 100%;
+	max-width: 100%;
+	padding-left: 1rem;
+	overflow-x: auto;
+
+	${({ col }) =>
+		col &&
+		css`
+			grid-template-columns: repeat(${col}, 1fr);
+		`};
+
+	${({ row }) =>
+		row &&
+		css`
+			grid-template-rows: repeat(${row}, 1fr);
+		`};
+`;
+
+export const StyledResultsGrid = styled.div<{ row: number }>`
+	${BaseGrid}
+	grid-template-columns: repeat(1, 1fr);
+	padding-right: 1rem;
+
+	${({ row }) =>
+		row &&
+		css`
+			grid-template-rows: repeat(${row + 1}, 1fr);
+		`};
+`;
+
+export const StyledGridWrapper = styled.div`
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: end;
+	justify-content: center;
+	gap: 2rem;
+	flex-flow: row nowrap;
+`;
+
+//  GRID END

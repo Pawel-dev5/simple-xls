@@ -7,12 +7,14 @@ import { ContextProviderProps, GridObjectInterface } from 'components/models/hoo
 // HELPERS
 import { spliceIntoChunks } from 'components/helpers/spliceIntoChunks';
 import { getRandomNumber } from 'components/helpers/randomNumber';
+import { arrayObjectSum } from 'components/helpers/arrayObjectSum';
 
 export const useExcel = () => {
+	const [allItemsCounter, setAllItemsCounter] = useState(0);
 	const [row, setRow] = useState(3);
 	const [col, setCol] = useState(3);
 	const [gridArray, setGridArray] = useState<GridObjectInterface[]>([]);
-	const [rowsResults, setRowsResults] = useState<any>([]);
+	const [rowsResults, setRowsResults] = useState<GridObjectInterface[][]>([]);
 
 	const generateNewObject = () => {
 		const newValue: GridObjectInterface = {
@@ -22,15 +24,12 @@ export const useExcel = () => {
 		return newValue;
 	};
 
-	useEffect(() => {
-		setGridArray(Array.from({ length: col * row }, () => generateNewObject()));
-	}, [row, col]);
+	useEffect(() => setGridArray(Array.from({ length: col * row }, () => generateNewObject())), [row, col]);
 
 	useEffect(() => {
 		setRowsResults(spliceIntoChunks(gridArray, col));
+		setAllItemsCounter(arrayObjectSum(gridArray));
 	}, [gridArray]);
-
-	console.log(gridArray);
 
 	return {
 		row,
@@ -39,6 +38,7 @@ export const useExcel = () => {
 		rowsResults,
 		setRow,
 		setCol,
+		allItemsCounter,
 	};
 };
 

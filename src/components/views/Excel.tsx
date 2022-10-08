@@ -12,14 +12,18 @@ import { StyledGrid, StyledExcel, StyledResultsGrid, StyledGridWrapper } from 'c
 
 // HELPERS
 import { tokenMaker } from 'components/helpers/tokenMaker';
+import { arrayObjectSum } from 'components/helpers/arrayObjectSum';
+
+// MODELS
 import { GridObjectInterface } from 'components/models/hooks';
 
 export const ExcelWrapper = () => {
-	const { row, col, gridArray, rowsResults } = useContext(ContextData);
+	const { row, col, gridArray, rowsResults, allItemsCounter } = useContext(ContextData);
 
 	return (
 		<StyledExcel>
 			<Buttons />
+
 			<StyledGridWrapper>
 				<StyledGrid col={col} row={row}>
 					{gridArray?.map((item: GridObjectInterface) => (
@@ -28,12 +32,15 @@ export const ExcelWrapper = () => {
 				</StyledGrid>
 
 				<StyledResultsGrid row={row}>
-					{rowsResults?.map((item: any) => {
-						const sum = item?.reduce((accumulator: any, object: { value: any }) => accumulator + object.value, 0);
+					<span>Sum</span>
+					{rowsResults?.map((item: GridObjectInterface[]) => {
+						const sum = arrayObjectSum(item);
 						return <div key={tokenMaker(9)}>{sum}</div>;
 					})}
 				</StyledResultsGrid>
 			</StyledGridWrapper>
+
+			<span>All sum: {allItemsCounter}</span>
 		</StyledExcel>
 	);
 };

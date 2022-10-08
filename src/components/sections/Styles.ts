@@ -6,6 +6,7 @@ export const StyledButtonWrapper = styled.div`
 	justify-content: space-between;
 	align-items: center;
 	font-size: 1.25rem;
+	padding-bottom: 1rem;
 `;
 
 export const StyledCounter = styled.span`
@@ -55,6 +56,7 @@ export const StyledResultsGrid = styled.div<{ row: number }>`
 
 export const StyledGridWrapper = styled.div`
 	width: fit-content;
+	max-width: 100%;
 	height: 100%;
 	display: flex;
 	align-items: end;
@@ -68,6 +70,13 @@ export const StyledSum = styled.span`
 	display: flex;
 	align-items: center;
 	justify-content: center;
+`;
+
+export const StyledCountersWrapper = styled.div`
+	width: 6.5rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 `;
 
 //  GRID END

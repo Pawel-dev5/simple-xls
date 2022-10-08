@@ -10,6 +10,7 @@ import { StyledExcel } from 'components/Styles';
 export const Excel = () => (
 	<ContextProvider>
 		<StyledExcel>
+			<h1>Simple grid xls</h1>
 			<Buttons />
 			<Grid />
 		</StyledExcel>

@@ -2,7 +2,7 @@ import { useEffect, useState, createContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 // MODELS
-import { ContextProviderProps, GridObjectInterface } from 'components/models/hooks';
+import { ContextProviderProps, GridObjectInterface, HandlerTypes } from 'components/models/hooks';
 
 // HELPERS
 import { spliceIntoChunks } from 'components/helpers/spliceIntoChunks';
@@ -29,20 +29,44 @@ export const useExcel = () => {
 		setGridArray(newValues);
 	};
 
+	const handleRow = (type: HandlerTypes) => {
+		if (gridArray.length > 0) {
+			if (type === HandlerTypes.ADD) {
+				setRow(row + 1);
+				setGridArray([...gridArray, ...Array.from({ length: col }, () => generateNewObject())]);
+			}
+			if (type === HandlerTypes.DELETE) {
+				setRow(row - 1);
+				setGridArray(gridArray.slice(0, -col));
+			}
+		}
+	};
+
+	const handleCol = (type: HandlerTypes) => {
+		if (gridArray.length > 0) {
+			const newGridArray: GridObjectInterface[] = [];
+
+			if (type === HandlerTypes.ADD) {
+				setCol(col + 1);
+				rowsResults.forEach((item) => {
+					const newValue = [...item, generateNewObject()];
+					newValue.forEach((i) => newGridArray.push(i));
+				});
+			}
+
+			if (type === HandlerTypes.DELETE) {
+				setCol(col - 1);
+				rowsResults.forEach((item) => {
+					const newValue = item.slice(0, -1);
+					newValue.forEach((i) => newGridArray.push(i));
+				});
+			}
+
+			if (newGridArray.length > 0) setGridArray(newGridArray);
+		}
+	};
+
 	useEffect(() => setGridArray(Array.from({ length: col * row }, () => generateNewObject())), []);
-
-	useEffect(() => {
-		if (gridArray.length > 0) setGridArray([...gridArray, ...Array.from({ length: col }, () => generateNewObject())]);
-	}, [row]);
-
-	useEffect(() => {
-		const newGridArray: GridObjectInterface[] = [];
-		rowsResults.forEach((item) => {
-			const newValue = [...item, generateNewObject()];
-			newValue.forEach((i) => newGridArray.push(i));
-		});
-		if (newGridArray.length > 0) setGridArray(newGridArray);
-	}, [col]);
 
 	useEffect(() => {
 		setRowsResults(spliceIntoChunks(gridArray, col));
@@ -55,9 +79,9 @@ export const useExcel = () => {
 		gridArray,
 		rowsResults,
 		allItemsCounter,
-		setRow,
-		setCol,
 		updateInputs,
+		handleRow,
+		handleCol,
 	};
 };
 

@@ -9,26 +9,29 @@ import { Button } from 'components/items';
 // STYLES
 import { StyledButtonWrapper, StyledCounter, StyledCountersWrapper, StyledButtons } from 'components/sections/Styles';
 
+// MODELS
+import { HandlerTypes } from 'components/models/hooks';
+
 export const Buttons = () => {
-	const { row, setRow, col, setCol } = useContext(ContextData);
+	const { row, col, handleRow, handleCol } = useContext(ContextData);
 
 	return (
 		<StyledButtons>
 			<StyledButtonWrapper>
 				<span>Columns: </span>
 				<StyledCountersWrapper>
-					<Button disabled={col === 1} onClick={() => setCol(col - 1)} icon="-" />
+					<Button disabled={col === 1} onClick={() => handleCol(HandlerTypes.DELETE)} icon="-" />
 					<StyledCounter>{col}</StyledCounter>
-					<Button onClick={() => setCol(col + 1)} icon="+" />
+					<Button onClick={() => handleCol(HandlerTypes.ADD)} icon="+" />
 				</StyledCountersWrapper>
 			</StyledButtonWrapper>
 
 			<StyledButtonWrapper>
 				<span>Rows: </span>
 				<StyledCountersWrapper>
-					<Button disabled={row === 1} onClick={() => setRow(row - 1)} icon="-" />
+					<Button disabled={row === 1} onClick={() => handleRow(HandlerTypes.DELETE)} icon="-" />
 					<StyledCounter>{row}</StyledCounter>
-					<Button onClick={() => setRow(row + 1)} icon="+" />
+					<Button onClick={() => handleRow(HandlerTypes.ADD)} icon="+" />
 				</StyledCountersWrapper>
 			</StyledButtonWrapper>
 		</StyledButtons>

@@ -29,7 +29,20 @@ export const useExcel = () => {
 		setGridArray(newValues);
 	};
 
-	useEffect(() => setGridArray(Array.from({ length: col * row }, () => generateNewObject())), [row, col]);
+	useEffect(() => setGridArray(Array.from({ length: col * row }, () => generateNewObject())), []);
+
+	useEffect(() => {
+		if (gridArray.length > 0) setGridArray([...gridArray, ...Array.from({ length: col }, () => generateNewObject())]);
+	}, [row]);
+
+	useEffect(() => {
+		const newGridArray: GridObjectInterface[] = [];
+		rowsResults.forEach((item) => {
+			const newValue = [...item, generateNewObject()];
+			newValue.forEach((i) => newGridArray.push(i));
+		});
+		if (newGridArray.length > 0) setGridArray(newGridArray);
+	}, [col]);
 
 	useEffect(() => {
 		setRowsResults(spliceIntoChunks(gridArray, col));

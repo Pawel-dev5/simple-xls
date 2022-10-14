@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+# Simple XLS
 
 Aplikacja w React.js wyświetlającą matrycę n x n z polami liczbowymi (domyślnie wartości losowe od 1 do 999), w które można
 wpisać inne liczby (po kliknięciu w liczbę można ją edytować wpisując tylko cyfry). Każdy wiersz matrycy powinien wyświetlać
